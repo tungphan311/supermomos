@@ -1,0 +1,247 @@
+.link {
+  color: #333;
+  text-decoration: none;
+  margin-left: 48px;
+  font-weight: 500;
+}
+
+.link:hover {
+  font-weight: 700;
+  color: #333;
+}
+
+.socialContainer {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+.input {
+  padding: 0px 12px;
+  background: #fff;
+  font-weight: 600;
+  line-height: 40px;
+  height: 40px;
+  margin-left: 8px;
+  border: 0;
+  color: #333;
+}
+
+.inputSmall {
+  font-size: 16px;
+  border-radius: 4px;
+}
+
+.inputLarge {
+  font-size: 28px;
+  border-radius: 8px;
+}
+
+.inputWrapper {
+  display: flex;
+  margin-top: 12px;
+  align-items: center;
+}
+
+.capacityInput {
+  width: 155px;
+}
+
+.priceInput {
+  width: 155px;
+}
+
+.banner {
+  width: 100%;
+  height: 445px;
+  background: rgba(242, 242, 242, 0.1);
+  border: 1px dashed #f2f2f2;
+  border-radius: 0px 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.showBanner {
+  position: relative;
+  width: 100%;
+  height: 445px;
+}
+
+.selectedBanner {
+  border-radius: 0px 64px;
+}
+
+.banner:hover {
+  opacity: 0.5;
+}
+
+.bannerText {
+  font-size: 20px;
+  font-weight: 600;
+  color: #14597a;
+  line-height: 19px;
+  margin-left: 16px;
+}
+
+.textArea {
+  color: #667085;
+  line-height: 24px;
+  padding: 12px 14px;
+  background: #ffffff;
+  border: 1px solid #d0d5dd;
+  box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+  border-radius: 8px;
+  display: block;
+  width: 100%;
+}
+
+.label {
+  font-weight: 500;
+  color: #333;
+  line-height: 20px;
+}
+
+.settingWrapper {
+  background: white;
+  padding: 32px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  margin-top: 32px;
+  margin-bottom: 32px;
+}
+
+.settingTitle {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 60px;
+  color: #942f70;
+}
+
+.settingTitleWrapper {
+  padding: 0px 12px;
+  background: #fef452;
+  height: 60px;
+  width: fit-content;
+  margin-bottom: 24px;
+}
+
+.formGroup {
+  display: flex;
+  align-items: center;
+}
+
+.formLabel {
+  margin-bottom: 0;
+}
+
+.settingLabel {
+  color: #344054;
+  font-weight: 500;
+  line-height: 24px;
+  margin-top: 24px;
+}
+
+.radioInput {
+  margin-right: 32px;
+}
+
+.settingDescription {
+  color: #475467;
+  line-height: 24px;
+}
+
+.tag {
+  padding: 2px 10px;
+  display: flex;
+  align-items: center;
+  border-radius: 16px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+.unselectedTag {
+  background: #f2f4f7;
+  color: #344054;
+}
+
+.selectedTag {
+  background: #f9f5ff;
+  color: #942f70;
+}
+
+.btnSelectTag {
+  border: none;
+  font-size: 12px;
+  color: #942f70;
+  margin-left: 4px;
+  font-weight: 500;
+}
+
+.btnCreateSocial {
+  padding: 12px 20px;
+  height: 48px;
+  width: 100%;
+  background: #fef452;
+  border: 1px solid #fef452;
+  box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+  border-radius: 8px;
+  font-weight: 500;
+  color: #942f70;
+}
+
+.btn {
+  padding: 12px 20px;
+  height: 48px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.btnClose {
+  background: transparent;
+  color: #333;
+}
+
+.btnSave {
+  background: #fef452;
+  box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+  color: #942f70;
+}
+
+.btnClose:hover {
+  background: #f9f5ff;
+}
+
+.btnSave:hover {
+  background: rgba(#fef452, 0.5);
+}
+
+.bannerWrapper {
+  flex: 0 1 calc(20% - 12px);
+  aspect-ratio: 4 / 3;
+  position: relative;
+  cursor: pointer;
+  border: 4px solid white;
+}
+
+.bannerWrapper:hover {
+  border-color: #c6c8cb;
+}
+
+.bannerWrapper.selected {
+  border-color: #fef452;
+}
+
+.bannerList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.bannerImg {
+  object-fit: fill;
+}

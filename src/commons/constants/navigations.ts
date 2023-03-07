@@ -16,12 +16,7 @@ export const NAVIGATIONS: Navigation[] = [
   {
     text: "Clubs",
     url: "/clubs",
-    children: [
-      {
-        text: "Clubs",
-        url: "/clubs",
-      },
-    ],
+    children: [],
   },
   {
     text: "Contact",
