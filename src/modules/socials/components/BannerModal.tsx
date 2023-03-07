@@ -44,6 +44,7 @@ export default function BannerModal({
         <div className={styles.bannerList}>
           {banners.map((banner) => (
             <div
+              key={banner}
               className={`${styles.bannerWrapper} ${
                 banner === tempSelectedBanner ? styles.selected : ""
               } `}

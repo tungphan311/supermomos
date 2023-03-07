@@ -225,6 +225,7 @@ export default function CreateForm({ banners }: CreateFormProps) {
           <div className="d-flex mt-4">
             {TAGS.map((tag) => (
               <div
+                key={tag}
                 className={tagClassName(tag)}
                 onClick={() => toggleSelectTag(tag)}
               >
