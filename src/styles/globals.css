@@ -23,6 +23,18 @@ body {
   min-height: 100vh;
 }
 
-.react-datepicker__input-container input {
-  width: 100%;
+.react-datepicker-wrapper {
+  flex: 1;
+}
+
+/* Works for Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Works for Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }

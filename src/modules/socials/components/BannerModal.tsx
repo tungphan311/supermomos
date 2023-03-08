@@ -34,8 +34,13 @@ export default function BannerModal({
     handleClose();
   };
 
+  const onClose = () => {
+    setTempSelectedBanner("");
+    handleClose();
+  };
+
   return (
-    <Modal show={show} onHide={handleClose} size="xl">
+    <Modal show={show} onHide={onClose} size="xl">
       <Modal.Header closeButton>
         <Modal.Title>Choose a banner</Modal.Title>
       </Modal.Header>
@@ -65,7 +70,7 @@ export default function BannerModal({
       <Modal.Footer>
         <button
           className={`${styles.btn} ${styles.btnClose}`}
-          onClick={handleClose}
+          onClick={onClose}
         >
           Close
         </button>

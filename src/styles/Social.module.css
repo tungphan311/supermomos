@@ -24,22 +24,21 @@
   margin-left: 8px;
   border: 0;
   color: #333;
-}
-
-.inputSmall {
-  font-size: 16px;
   border-radius: 4px;
+  flex: 1;
 }
 
 .inputLarge {
   font-size: 28px;
   border-radius: 8px;
+  width: 100%;
 }
 
 .inputWrapper {
   display: flex;
   margin-top: 12px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .capacityInput {
@@ -129,10 +128,7 @@
 .formGroup {
   display: flex;
   align-items: center;
-}
-
-.formLabel {
-  margin-bottom: 0;
+  flex-wrap: wrap;
 }
 
 .settingLabel {
@@ -244,4 +240,33 @@
 
 .bannerImg {
   object-fit: fill;
+}
+
+.resizingTextArea {
+  border: none;
+  background: #942f70;
+  line-height: 60px;
+  padding: 4px 12px;
+  font-weight: 700;
+  font-size: 48px;
+  color: #fff;
+  overflow: hidden;
+  resize: none;
+  max-width: 600px;
+  max-height: 200px;
+}
+
+.resizingTextArea:focus {
+  background: #942f70;
+  color: white;
+}
+
+.resizingTextArea::placeholder {
+  color: white;
+}
+
+.eventWrapper {
+  position: absolute;
+  left: 0;
+  z-index: 1000;
 }
