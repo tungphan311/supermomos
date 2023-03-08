@@ -1,13 +1,15 @@
-import { TAGS } from "@/commons/constants";
+import { mergeDateAndTime } from "@/commons/utils";
+import axios from "@/commons/utils/axios";
 import styles from "@/styles/Social.module.css";
-import { Formik } from "formik";
-import Image from "next/image";
+import { Field, Formik } from "formik";
 import { createRef, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
 import { array, date, number, object, string } from "yup";
 import BannerModal from "./BannerModal";
+import BannerSection from "./BannerSection";
 import EventDetailSection from "./EventDetailSection";
 import FormTitle from "./FormTitle";
+import SettingsSection from "./SettingsSection";
 
 type CreateFormProps = {
   banners: string[];
@@ -16,6 +18,7 @@ type CreateFormProps = {
 type CreateFormFields = {
   title: string;
   startAt: Date;
+  time: Date;
   venue: string;
   capacity: number;
   price: number;
@@ -35,92 +38,68 @@ const schema = object({
   price: number().required(),
   description: string().required(),
   banner: string().required(),
-  tags: array().of(string()).required(),
-  privacy: string().required(),
+  privacy: string().required("Please select one option"),
+  tags: array().min(1, "Please choose one tag at least"),
 });
 
-const initFormValue = {
-  title: "",
+const initFormValue: CreateFormFields = {
+  title: "Test",
   startAt: new Date(),
   time: new Date(),
-  venue: "",
-  capacity: 0,
-  price: 0,
-  description: "",
+  venue: "Test",
+  capacity: 10,
+  price: 10,
+  description: "Test",
   banner: "",
   tags: [],
   isManualApprove: false,
-  privacy: "",
+  privacy: "Public",
 };
 
 export default function CreateForm({ banners }: CreateFormProps) {
   const [showBanner, setShowBanner] = useState(false);
 
-  const [selectedTag, setSelectedTag] = useState<any>({});
-  const [selectedBanner, setSelectedBanner] = useState<string>("");
-  const [validated, setValidated] = useState<boolean>(false);
-  const [formValue, setFormValue] = useState<CreateFormFields>(initFormValue);
-
   const inputRef = createRef<HTMLTextAreaElement>();
   const divRef = createRef<HTMLDivElement>();
-
-  const tagClassName = (tag: string): string => {
-    if (selectedTag[tag]) {
-      return `${styles.tag} ${styles.selectedTag}`;
-    }
-
-    return `${styles.tag} ${styles.unselectedTag}`;
-  };
-
-  const toggleSelectTag = (tag: string): void => {
-    setSelectedTag({ ...selectedTag, [tag]: !selectedTag[tag] });
-  };
 
   const handleCloseBanner = () => setShowBanner(false);
   const handleShowBanner = () => setShowBanner(true);
 
-  const handleSelectBanner = (banner: string) => {
-    if (banner === selectedBanner) {
-      setSelectedBanner("");
-    } else {
-      setSelectedBanner(banner);
-    }
-  };
-
-  const handleFormSubmit = (event: any) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-
-    event.preventDefault();
-    console.log({ ...form });
-    setValidated(true);
-  };
-
-  const handleValueChange = (event: any) => {
-    const key = event.currentTarget.id;
-    const value = event.currentTarget.value;
-
-    setFormValue((prevState) => ({ ...prevState, [key]: value }));
+  const handleFormSubmit = async (values: CreateFormFields) => {
+    const {
+      title,
+      startAt,
+      time,
+      venue,
+      capacity,
+      price,
+      description,
+      isManualApprove,
+      privacy,
+      banner,
+      tags,
+    } = values;
+    const result = await axios.post("/interview/social", {
+      title,
+      startAt: mergeDateAndTime(startAt, time),
+      venue,
+      capacity,
+      price,
+      description,
+      isManualApprove,
+      privacy,
+      banner,
+      tags,
+    });
   };
 
   return (
     <Formik
       validationSchema={schema}
-      onSubmit={console.log}
+      onSubmit={(values) => handleFormSubmit(values)}
       initialValues={initFormValue}
     >
-      {({
-        handleSubmit,
-        handleChange,
-        handleBlur,
-        values,
-        touched,
-        isValid,
-        errors,
-      }) => (
+      {({ handleSubmit }) => (
         <Form
           className={styles.socialContainer}
           noValidate
@@ -138,110 +117,38 @@ export default function CreateForm({ banners }: CreateFormProps) {
               <EventDetailSection />
             </Col>
             <Col xs={12} md={6} lg={7}>
-              <Form.Group controlId="banner">
-                <Form.Control
-                  type="text"
-                  className="d-none"
-                  value={selectedBanner}
-                  readOnly
-                />
-                {!selectedBanner ? (
-                  <div className={styles.banner} onClick={handleShowBanner}>
-                    <Image
-                      src="/assets/icons/picture.svg"
-                      alt="picture"
-                      width={24}
-                      height={24}
-                    />
-                    <span className={styles.bannerText}>Add a banner</span>
-                  </div>
-                ) : (
-                  <div className={styles.showBanner}>
-                    <Image
-                      src={selectedBanner}
-                      alt="selected banner"
-                      fill
-                      className={styles.selectedBanner}
-                    />
-                  </div>
-                )}
-              </Form.Group>
+              <BannerSection handleShowBanner={handleShowBanner} />
             </Col>
           </Row>
 
           <Col md={12} lg={6}>
-            <Form.Group controlId="description">
-              <Form.Label className={styles.label}>Description</Form.Label>
-              <Form.Control
-                as="textarea"
-                className={styles.textArea}
-                placeholder="Description of your event..."
-                rows={6}
-                required
-                style={{ flex: 1 }}
-              />
-            </Form.Group>
+            <Field name="description">
+              {({ field, form }: any) => {
+                const isValid = !form.errors[field.name];
+                const isInvalid = form.touched[field.name] && !isValid;
 
-            <div className={styles.settingWrapper}>
-              <div className={styles.settingTitleWrapper}>
-                <div className={styles.settingTitle}>Settings</div>
-              </div>
+                return (
+                  <Form.Group controlId="description">
+                    <Form.Label className={styles.label}>
+                      Description
+                    </Form.Label>
+                    <Form.Control
+                      {...field}
+                      as="textarea"
+                      className={styles.textArea}
+                      placeholder="Description of your event..."
+                      rows={6}
+                      required
+                      style={{ flex: 1 }}
+                      isInvalid={isInvalid}
+                      isValid={form.touched[field.name] && isValid}
+                    />
+                  </Form.Group>
+                );
+              }}
+            </Field>
 
-              <Form.Group controlId="isManualApprove">
-                <Form.Check
-                  type="checkbox"
-                  label="I want to approve attendees"
-                />
-              </Form.Group>
-
-              <div className={styles.settingLabel}>Privacy</div>
-              <div>
-                <Form.Check
-                  inline
-                  label="Public"
-                  name="privacy"
-                  type="radio"
-                  id="Public"
-                  className={styles.radioInput}
-                />
-                <Form.Check
-                  inline
-                  label="Curated Audience"
-                  name="privacy"
-                  type="radio"
-                  id="Curated Audience"
-                  className={styles.radioInput}
-                />
-                <Form.Check
-                  inline
-                  label="Community Only"
-                  name="privacy"
-                  type="radio"
-                  id="Community Only"
-                  className={styles.radioInput}
-                />
-              </div>
-
-              <div className={styles.settingLabel}>Tag your social</div>
-              <div className={styles.settingDescription}>
-                Pick tags for our curation engine to work its magin
-              </div>
-
-              <div className="d-flex mt-4">
-                {TAGS.map((tag) => (
-                  <div
-                    key={tag}
-                    className={tagClassName(tag)}
-                    onClick={() => toggleSelectTag(tag)}
-                  >
-                    {tag}
-                    {selectedTag[tag] && (
-                      <div className={styles.btnSelectTag}>&#x2715;</div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
+            <SettingsSection />
 
             <button type="submit" className={styles.btnCreateSocial}>
               CREATE SOCIAL
@@ -252,8 +159,6 @@ export default function CreateForm({ banners }: CreateFormProps) {
             show={showBanner}
             handleClose={handleCloseBanner}
             banners={banners}
-            selectedBanner={selectedBanner}
-            setSelectedBanner={handleSelectBanner}
           />
         </Form>
       )}

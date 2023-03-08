@@ -32,9 +32,6 @@ export default function Input({
               isInvalid={isInvalid}
               isValid={form.touched[field.name] && isValid}
             />
-            {/* <Form.Control.Feedback type="invalid" tooltip>
-              {form.errors[field.name]}
-            </Form.Control.Feedback> */}
           </Form.Group>
         );
       }}

@@ -1,28 +1,28 @@
-import Modal from "react-bootstrap/Modal";
 import styles from "@/styles/Social.module.css";
+import { useField, useFormikContext } from "formik";
 import Image from "next/image";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
+import Modal from "react-bootstrap/Modal";
 
 type BannerModalProps = {
   show: boolean;
   handleClose: () => void;
   banners: string[];
-  selectedBanner: string;
-  setSelectedBanner: (banner: string) => void;
 };
 
 export default function BannerModal({
   show,
   handleClose,
   banners,
-  setSelectedBanner,
-  selectedBanner,
 }: BannerModalProps) {
-  const [tempSelectedBanner, setTempSelectedBanner] =
-    useState<string>(selectedBanner);
+  const [field] = useField("banner");
+  const [tempSelectedBanner, setTempSelectedBanner] = useState<string>(
+    field.value
+  );
+  const { setFieldValue } = useFormikContext();
 
   const handleChangeTempBanner = (banner: string) => {
-    if (banner === selectedBanner) {
+    if (banner === tempSelectedBanner) {
       setTempSelectedBanner("");
     } else {
       setTempSelectedBanner(banner);
@@ -30,7 +30,7 @@ export default function BannerModal({
   };
 
   const handleSaveChange = () => {
-    setSelectedBanner(tempSelectedBanner);
+    setFieldValue("banner", tempSelectedBanner);
     handleClose();
   };
 
