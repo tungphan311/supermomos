@@ -6,6 +6,7 @@ import { Field, Formik } from "formik";
 import { useRouter } from "next/router";
 import { createRef, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
+import { toast } from "react-toastify";
 import { array, date, number, object, string } from "yup";
 import BannerModal from "./BannerModal";
 import BannerSection from "./BannerSection";
@@ -31,18 +32,17 @@ const schema = object({
 });
 
 const initFormValue: SocialFields = {
-  title: "Test",
+  title: "",
   startAt: new Date(),
   time: new Date(),
-  venue: "Test",
-  capacity: 10,
-  price: 10,
-  description: "Test",
-  banner:
-    "https://supermomos-app-resources-us.s3.amazonaws.com/Images/SocialBanner/banner_1.jpg",
+  venue: "",
+  capacity: 0,
+  price: 0,
+  description: "",
+  banner: "",
   tags: [],
   isManualApprove: false,
-  privacy: "Public",
+  privacy: "",
 };
 
 export default function CreateForm({ banners }: CreateFormProps) {
@@ -87,10 +87,20 @@ export default function CreateForm({ banners }: CreateFormProps) {
       });
 
       setIsSubmitted(true);
+      toast("Create Social Event Successfully", {
+        hideProgressBar: true,
+        autoClose: 2000,
+        type: "success",
+      });
       router.push(`/socials/${result.data.id}`);
     } catch (error: any) {
       setIsSubmitted(false);
       console.log("Error: ", error);
+      toast("Create Social Event Failed!!!", {
+        hideProgressBar: true,
+        autoClose: 2000,
+        type: "error",
+      });
     }
   };
 
