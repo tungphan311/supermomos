@@ -14,7 +14,7 @@ export default function BannerSection({
   const { errors }: any = useFormikContext();
 
   return (
-    <Form.Group controlId="banner">
+    <Form.Group controlId="banner" style={{ position: "relative" }}>
       <Field type="text" className="d-none" value={field.value} readOnly />
       {!field.value ? (
         <div className={styles.banner} onClick={handleShowBanner}>
@@ -40,7 +40,7 @@ export default function BannerSection({
       <Form.Control.Feedback
         type="invalid"
         tooltip
-        style={{ display: !!errors[field.name] ? "block" : "none", right: 12 }}
+        style={{ display: !!errors[field.name] ? "block" : "none", right: 0 }}
       >
         {errors[field.name]}
       </Form.Control.Feedback>
