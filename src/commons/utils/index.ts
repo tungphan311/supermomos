@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const mergeDateAndTime = (d1: Date, d2: Date): Date => {
   // Extract the date and time values from the two objects
   const year = d1.getFullYear();
@@ -10,4 +12,12 @@ export const mergeDateAndTime = (d1: Date, d2: Date): Date => {
   // Create a new Date object with the merged values
   const mergedDate = new Date(year, month, day, hours, minutes, seconds);
   return mergedDate;
+};
+
+export const formatDate = (date: Date): string => {
+  return moment(date).format("MMMM Do, ddd");
+};
+
+export const formatTime = (date: Date): string => {
+  return moment(date).format("h a");
 };

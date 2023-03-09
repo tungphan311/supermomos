@@ -266,7 +266,31 @@
 }
 
 .eventWrapper {
-  position: absolute;
   left: 0;
   z-index: 1000;
+}
+
+.eventTitle {
+  max-width: 600px;
+  background: #942f70;
+  line-height: 66px;
+  font-size: 48px;
+  font-weight: 700;
+  color: white;
+  -webkit-box-decoration-break: clone;
+}
+
+.description {
+  font-size: 18px;
+  line-height: 28px;
+}
+
+.eventDetail {
+  font-weight: 600;
+  line-height: 40px;
+  margin-left: 8px;
+}
+
+.eventTime {
+  font-size: 28px;
 }

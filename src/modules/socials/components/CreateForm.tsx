@@ -1,3 +1,4 @@
+import { SocialFields } from "@/commons/types/social";
 import { mergeDateAndTime } from "@/commons/utils";
 import axios from "@/commons/utils/axios";
 import styles from "@/styles/Social.module.css";
@@ -15,20 +16,6 @@ type CreateFormProps = {
   banners: string[];
 };
 
-type CreateFormFields = {
-  title: string;
-  startAt: Date;
-  time: Date;
-  venue: string;
-  capacity: number;
-  price: number;
-  description: string;
-  banner: string;
-  tags: string[];
-  isManualApprove?: boolean;
-  privacy: string;
-};
-
 const schema = object({
   title: string().required(),
   startAt: date().required(),
@@ -42,7 +29,7 @@ const schema = object({
   tags: array().min(1, "Please choose one tag at least"),
 });
 
-const initFormValue: CreateFormFields = {
+const initFormValue: SocialFields = {
   title: "Test",
   startAt: new Date(),
   time: new Date(),
@@ -50,7 +37,8 @@ const initFormValue: CreateFormFields = {
   capacity: 10,
   price: 10,
   description: "Test",
-  banner: "",
+  banner:
+    "https://supermomos-app-resources-us.s3.amazonaws.com/Images/SocialBanner/banner_1.jpg",
   tags: [],
   isManualApprove: false,
   privacy: "Public",
@@ -65,32 +53,37 @@ export default function CreateForm({ banners }: CreateFormProps) {
   const handleCloseBanner = () => setShowBanner(false);
   const handleShowBanner = () => setShowBanner(true);
 
-  const handleFormSubmit = async (values: CreateFormFields) => {
-    const {
-      title,
-      startAt,
-      time,
-      venue,
-      capacity,
-      price,
-      description,
-      isManualApprove,
-      privacy,
-      banner,
-      tags,
-    } = values;
-    const result = await axios.post("/interview/social", {
-      title,
-      startAt: mergeDateAndTime(startAt, time),
-      venue,
-      capacity,
-      price,
-      description,
-      isManualApprove,
-      privacy,
-      banner,
-      tags,
-    });
+  const handleFormSubmit = async (values: SocialFields) => {
+    try {
+      const {
+        title,
+        startAt,
+        time,
+        venue,
+        capacity,
+        price,
+        description,
+        isManualApprove,
+        privacy,
+        banner,
+        tags,
+      } = values;
+
+      const result = await axios.post("/api/social", {
+        title,
+        startAt: mergeDateAndTime(startAt, time),
+        venue,
+        capacity,
+        price,
+        description,
+        isManualApprove,
+        privacy,
+        banner,
+        tags,
+      });
+    } catch (error: any) {
+      console.log("Error: ", error);
+    }
   };
 
   return (
@@ -105,7 +98,7 @@ export default function CreateForm({ banners }: CreateFormProps) {
           noValidate
           onSubmit={handleSubmit}
         >
-          <Row style={{ flexDirection: "row-reverse", position: "relative" }}>
+          <Row>
             <Col
               xs={12}
               md={6}

@@ -11,6 +11,12 @@ const nextConfig = {
       },
     ],
   },
+  rewrites: async () => [
+    {
+      source: "/api/:path*",
+      destination: "https://api.supermomos-dev.com/interview/:path*",
+    },
+  ],
 };
 
 module.exports = nextConfig;
