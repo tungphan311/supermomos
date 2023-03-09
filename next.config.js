@@ -17,6 +17,13 @@ const nextConfig = {
       destination: "https://api.supermomos-dev.com/interview/:path*",
     },
   ],
+  redirects: async () => [
+    {
+      source: "/",
+      destination: "/socials/create-new",
+      permanent: true,
+    },
+  ],
 };
 
 module.exports = nextConfig;
