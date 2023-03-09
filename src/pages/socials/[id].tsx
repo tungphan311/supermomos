@@ -53,7 +53,7 @@ export default function ViewSocialPage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Container style={{ color: "#333" }}>
+        <Container style={{ color: "#333", padding: "100px 0" }}>
           <Row>
             <Col className={styles.eventWrapper} xs={12} md={6} lg={5}>
               <div style={{ width: 600 }}>
@@ -101,7 +101,9 @@ export default function ViewSocialPage() {
                   width={24}
                   height={24}
                 />
-                <span className={styles.eventDetail}>{capacity}</span>
+                <span className={styles.eventDetail}>
+                  {capacity} {capacity > 1 ? "people" : "person"}
+                </span>
 
                 <Image
                   src="/assets/icons/currency-dollar.svg"
@@ -110,7 +112,7 @@ export default function ViewSocialPage() {
                   height={24}
                   className="ms-4"
                 />
-                <span className={styles.eventDetail}>{price}</span>
+                <span className={styles.eventDetail}>${price}</span>
               </div>
             </Col>
             <Col xs={12} md={6} lg={7}>
@@ -125,7 +127,7 @@ export default function ViewSocialPage() {
             </Col>
           </Row>
 
-          <Col xs={12} md={6}>
+          <Col xs={12} md={6} className="mt-4">
             <p className={styles.description}>{description}</p>
           </Col>
         </Container>

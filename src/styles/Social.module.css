@@ -251,9 +251,7 @@
   font-size: 48px;
   color: #fff;
   overflow: hidden;
-  resize: none;
   max-width: 600px;
-  max-height: 200px;
 }
 
 .resizingTextArea:focus {

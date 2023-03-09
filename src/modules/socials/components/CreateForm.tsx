@@ -3,6 +3,7 @@ import { mergeDateAndTime } from "@/commons/utils";
 import axios from "@/commons/utils/axios";
 import styles from "@/styles/Social.module.css";
 import { Field, Formik } from "formik";
+import { useRouter } from "next/router";
 import { createRef, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
 import { array, date, number, object, string } from "yup";
@@ -46,6 +47,8 @@ const initFormValue: SocialFields = {
 
 export default function CreateForm({ banners }: CreateFormProps) {
   const [showBanner, setShowBanner] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const router = useRouter();
 
   const inputRef = createRef<HTMLTextAreaElement>();
   const divRef = createRef<HTMLDivElement>();
@@ -55,6 +58,7 @@ export default function CreateForm({ banners }: CreateFormProps) {
 
   const handleFormSubmit = async (values: SocialFields) => {
     try {
+      setIsSubmitted(true);
       const {
         title,
         startAt,
@@ -81,7 +85,11 @@ export default function CreateForm({ banners }: CreateFormProps) {
         banner,
         tags,
       });
+
+      setIsSubmitted(true);
+      router.push(`/socials/${result.data.id}`);
     } catch (error: any) {
+      setIsSubmitted(false);
       console.log("Error: ", error);
     }
   };
@@ -143,7 +151,11 @@ export default function CreateForm({ banners }: CreateFormProps) {
 
             <SettingsSection />
 
-            <button type="submit" className={styles.btnCreateSocial}>
+            <button
+              type="submit"
+              className={styles.btnCreateSocial}
+              disabled={isSubmitted}
+            >
               CREATE SOCIAL
             </button>
           </Col>
