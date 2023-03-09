@@ -1,5 +1,4 @@
-import { Field, useField, useFormik, useFormikContext } from "formik";
-import { Form } from "react-bootstrap";
+import { Field, useFormikContext } from "formik";
 
 type RadioGroupProps = {
   radioList: string[];
@@ -23,7 +22,9 @@ export default function RadioGroup({ radioList, name }: RadioGroupProps) {
               formError[name] ? "is-invalid" : ""
             }`}
           />
-          <label className="form-check-label">{r}</label>
+          <label className="form-check-label" htmlFor={name}>
+            {r}
+          </label>
         </div>
       ))}
     </div>

@@ -2,12 +2,10 @@ import Input from "@/commons/components/input/input";
 import styles from "@/styles/Social.module.css";
 import Image from "next/image";
 import { useState } from "react";
-import { Col, Form, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import DatePicker from "./DatePicker";
 
 export default function EventDetailSection() {
-  const [startDate, setStartDate] = useState<Date>(new Date());
-
   const inputLarge = `${styles.input} ${styles.inputLarge}`;
 
   return (
